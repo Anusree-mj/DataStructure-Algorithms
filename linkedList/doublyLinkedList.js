@@ -2,22 +2,24 @@ class Node {
     constructor(value) {
         this.value = value;
         this.next = null;
+        this.previous = null;
     }
 }
-
-class LinkedList {
+class DoublyLinkedList {
     constructor() {
         this.head = null;
         this.tail = null;
         this.size = 0;
     }
+
     isEmpty() {
-        return this.size === 0
+        return this.size === 0;
     }
+
     getSize() {
         return this.size;
     }
-    // time complexity O(1);
+
     prepend(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
@@ -25,11 +27,11 @@ class LinkedList {
             this.tail = node;
         } else {
             node.next = this.head;
+            this.head.previous = node;
             this.head = node;
         }
         this.size++;
     }
-    // time complexity O(1);
     append(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
@@ -37,74 +39,75 @@ class LinkedList {
             this.tail = node;
         } else {
             this.tail.next = node;
+            node.previous = this.tail;
             this.tail = node;
         }
         this.size++;
     }
-    // time complexity O(1);
     removeFromFront() {
         if (this.isEmpty()) {
-            console.log('List empty');
+            console.log('List is empty');
             return;
         } else {
-            const removedNodeValue = this.head.value;
-            this.head = this.head.next;
-            this.size--;
-            console.log('Removed node value is :', removedNodeValue)
-            return;
-        }
-    }
-    // time complexity O(n);
-    removeFromEnd() {
-        if (this.isEmpty()) {
-            console.log('List empty');
-            return;
-        } else {
-            const removedNodeValue = this.tail;
             if (this.size === 1) {
                 this.head = null;
                 this.tail = null;
             } else {
-                let prev = this.head;
-                while (prev.next !== this.tail) {
-                    prev = prev.next;
-                }
-                prev.next = null;
-                this.tail = prev;
+                this.head = this.head.next;
+                this.head.previous = null;
             }
-            this.size--;
-            console.log('Removed node value is :', removedNodeValue)
-            return;
         }
+        this.size--;
+    }
+    removeFromEnd() {
+        if (this.isEmpty()) {
+            console.log('List is empty');
+            return;
+        } else {
+            if (this.size === 1) {
+                this.head = null;
+                this.tail = null;
+            } else {
+               this.tail=this.tail.previous;
+               this.tail.next=null;
+            }
+        }
+        this.size--;
     }
     print() {
         if (this.isEmpty()) {
-            console.log("List is empty.");
+            console.log('List is empty');
         } else {
             let curr = this.head;
-            let linkedListValues = '';
+            let listValues = '';
             while (curr) {
-                linkedListValues += `${curr.value + ' '}`;
+                listValues += `${curr.value + ' '}`
                 curr = curr.next;
             }
-            console.log(linkedListValues)
+            console.log(listValues);
         }
     }
-
+    reverse(){
+        if(this.isEmpty()){
+            console.log("List is empty")
+        }else{
+            let curr = this.tail;
+            let reverseList='';
+            while(curr){
+                reverseList+=`${curr.value + " "}`;
+                curr=curr.previous;
+            }
+            console.log(reverseList);
+        }
+    }
 }
-const list = new LinkedList();
-list.prepend(10);
-list.prepend(20);
-list.prepend(30);
-list.print();
 
+const list = new DoublyLinkedList();
+list.prepend(10);
+list.prepend(40);
+list.print();
 list.append(100);
 list.print();
-
-list.removeFromFront();
-list.print();
-
 list.removeFromEnd();
 list.print();
-
-console.log('list size is:', list.getSize())
+list.reverse();
