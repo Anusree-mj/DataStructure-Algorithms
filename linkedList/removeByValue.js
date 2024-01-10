@@ -17,7 +17,9 @@ class linkedList {
     isEmpty() {
         return this.size === 0
     }
-    
+    getSize(){
+        return this.size;
+    }
     prepend(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
@@ -28,22 +30,29 @@ class linkedList {
         }
         this.size++;
     }
-    insert(value, index) {
-        if (index < 0 || index > this.size) {
-            console.log('Invalid index');
-            return;
-        } if (index === 0) {
-            this.prepend(value);
-        } else {
-            const node = new Node(value);
-            let prev = this.head;
-            for (let i = 0; i < index - 1; i++) {
-                prev = prev.next;
-            }
-            node.next = prev.next;
-            prev.next = node; 
-            this.size++;
+    removeByValue(value) {
+      let removeNode;
+      if(this.isEmpty()){
+        console.log("List is empty");
+      }else if(this.head.value===value){
+        removeNode=this.head;
+        this.head=this.head.next;
+      }else{
+        let prev = this.head;
+        while(prev.next && prev.next.value !==value){
+            prev=prev.next;
         }
+        if(prev.next){
+            removeNode = prev.next;
+            prev.next = removeNode.next;
+        }else{
+            console.log('Value not found')
+            return;
+        }
+      }
+      this.size--;
+      console.log('Removed node:',removeNode)
+      return;
     }
 
     print() {
@@ -65,5 +74,9 @@ const list = new linkedList()
 list.prepend(10);
 list.prepend(20);
 list.prepend(30);
-list.insert(25, 2)
+list.prepend(40);
 list.print();
+console.log('Size of the list before removing node',list.getSize());
+list.removeByValue(0);
+list.print();
+console.log('Size of the list after removing node',list.getSize())

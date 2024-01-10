@@ -17,7 +17,10 @@ class linkedList {
     isEmpty() {
         return this.size === 0
     }
-    
+
+    getSize() {
+        return this.size;
+    }
     prepend(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
@@ -28,24 +31,17 @@ class linkedList {
         }
         this.size++;
     }
-    insert(value, index) {
-        if (index < 0 || index > this.size) {
-            console.log('Invalid index');
-            return;
-        } if (index === 0) {
-            this.prepend(value);
-        } else {
-            const node = new Node(value);
-            let prev = this.head;
-            for (let i = 0; i < index - 1; i++) {
-                prev = prev.next;
-            }
-            node.next = prev.next;
-            prev.next = node; 
-            this.size++;
+    reverse(){
+        let prev=null;
+        let curr = this.head;
+        while(curr){
+            let next = curr.next;
+            curr.next = prev;
+            prev=curr;
+            curr = next;
         }
+        this.head=prev;
     }
-
     print() {
         if (this.isEmpty()) {
             console.log("List is empty")
@@ -65,5 +61,6 @@ const list = new linkedList()
 list.prepend(10);
 list.prepend(20);
 list.prepend(30);
-list.insert(25, 2)
+list.reverse();
+console.log('Reversed list :')
 list.print();
