@@ -55,7 +55,7 @@ class linkedList {
             console.log(listValues);
         }
     }
-}
+   }
 
 const list = new linkedList()
 list.prepend(10);
