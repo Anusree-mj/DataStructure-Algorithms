@@ -1,4 +1,4 @@
-// add a node at the beginning
+// add a node at the end
 // time complexity O(n)
 // space complexity O(1);
 class Node {
@@ -17,35 +17,19 @@ class linkedList {
     isEmpty() {
         return this.size === 0
     }
-    
-    prepend(value) {
+    append(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
             this.head = node;
         } else {
-            node.next = this.head;
-            this.head = node;
+            let prev = this.head;
+            while (prev.next) {
+                prev = prev.next;
+            }
+            prev.next = node;
         }
         this.size++;
     }
-    insert(value, index) {
-        if (index < 0 || index > this.size) {
-            console.log('Invalid index');
-            return;
-        } if (index === 0) {
-            this.prepend(value);
-        } else {
-            const node = new Node(value);
-            let prev = this.head;
-            for (let i = 0; i < index - 1; i++) {
-                prev = prev.next;
-            }
-            node.next = prev.next;
-            prev.next = node; 
-            this.size++;
-        }
-    }
-
     print() {
         if (this.isEmpty()) {
             console.log("List is empty")
@@ -62,8 +46,10 @@ class linkedList {
 }
 
 const list = new linkedList()
-list.prepend(10);
-list.prepend(20);
-list.prepend(30);
-list.insert(25, 2)
+// converting array to linked list
+const arr=[12,26,10,1]
+for(let i =0; i<arr.length;i++){
+    list.append(arr[i])
+}
+
 list.print();

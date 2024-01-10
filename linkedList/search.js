@@ -1,5 +1,5 @@
 // add a node at the beginning
-// time complexity O(n)
+// time complexity O(1)
 // space complexity O(1);
 class Node {
     constructor(value) {
@@ -17,7 +17,10 @@ class linkedList {
     isEmpty() {
         return this.size === 0
     }
-    
+
+    getSize() {
+        return this.size;
+    }
     prepend(value) {
         const node = new Node(value);
         if (this.isEmpty()) {
@@ -28,24 +31,21 @@ class linkedList {
         }
         this.size++;
     }
-    insert(value, index) {
-        if (index < 0 || index > this.size) {
-            console.log('Invalid index');
-            return;
-        } if (index === 0) {
-            this.prepend(value);
-        } else {
-            const node = new Node(value);
-            let prev = this.head;
-            for (let i = 0; i < index - 1; i++) {
-                prev = prev.next;
-            }
-            node.next = prev.next;
-            prev.next = node; 
-            this.size++;
+    search(value){
+        if(this.isEmpty()){
+            return -1;
         }
+        let i=0;
+        let curr = this.head;
+        while(curr){
+            if(curr.value===value){
+                return i;
+            }
+            curr=curr.next;
+            i++;
+        }
+        return -1;
     }
-
     print() {
         if (this.isEmpty()) {
             console.log("List is empty")
@@ -65,5 +65,5 @@ const list = new linkedList()
 list.prepend(10);
 list.prepend(20);
 list.prepend(30);
-list.insert(25, 2)
+console.log('Value found at index :',list.search(10))
 list.print();
