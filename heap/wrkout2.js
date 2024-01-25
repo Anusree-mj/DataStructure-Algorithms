@@ -1,7 +1,5 @@
 // removing an item from the heap(minHeap).
 
-// minHeap implementation
-
 class Heap {
     constructor() {
         this.heap = [];
