@@ -33,8 +33,8 @@ class Trie {
             console.log(word);
         }
 
-        for(const [char,childNode] of Object.entries(node.children)){
-            this._displayNode(childNode,word+char);
+        for(const child in node.children){
+            this._displayNode(node.children[child],word+child);
         }
     }
 }
